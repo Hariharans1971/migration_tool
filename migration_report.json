@@ -1,0 +1,14 @@
+{
+    "total_books_migrated": 1000,
+    "average_price": 35.07,
+    "most_expensive": 59.99,
+    "cheapest": 10.0,
+    "top_keywords": [
+        "Half",
+        "Book",
+        "Louisa",
+        "Speak",
+        "H"
+    ],
+    "status": "Migration Successful"
+}
