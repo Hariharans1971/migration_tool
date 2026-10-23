@@ -7,9 +7,10 @@ A Python learning project that scrapes the public Books to Scrape demo site, str
 ## Features
 
 - Extracts book titles, prices, and availability from the Books to Scrape practice website.
-- Exports structured JSON.
-- Produces a simple summary report and application logs.
-- Demonstrates Python modules, error handling, and basic HTTP API patterns.
+- Exports structured JSON and produces a summary report.
+- Applies request timeouts, bounded exponential retries, HTTP status validation, and a small delay between successful pages.
+- Keeps HTML parsing separate from network access so it can be tested with saved fixtures.
+- Includes mocked HTTP tests; CI does not depend on the live website.
 
 ## Project files
 
@@ -49,11 +50,23 @@ python flask_api.py
 
 Check the route definitions in `api.py` and `flask_api.py` for current endpoints.
 
+## Automated checks
+
+Run the offline tests with the lightweight scraper dependencies:
+
+```bash
+python -m pip install requests beautifulsoup4
+python -m unittest discover -s tests -v
+```
+
+The tests use saved HTML and mocked HTTP responses to verify extraction, HTTP-error handling, retries, and JSON export without scraping the live site.
+
 ## Engineering limitations
 
 - The scraper targets a practice site and its current HTML structure; page changes can break parsing.
 - Do not assume the reported number of records without running and checking the output.
-- Add request timeouts, bounded retries, respectful delays, input validation, and automated tests before extending this project.
+- The scraper validates HTTP status and required page elements, but the overall demo is not a production migration framework.
+- The separate NLP report requires the configured spaCy model; report generation should be checked independently.
 - Avoid committing generated logs, large output dumps, secrets, or personal data.
 
 ## Roadmap
