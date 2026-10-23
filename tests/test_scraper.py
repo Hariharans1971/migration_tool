@@ -84,20 +84,20 @@ class ScraperWorkflowTests(unittest.TestCase):
         failed_response.raise_for_status.side_effect = requests.HTTPError("503 Server Error")
         request_get = Mock(return_value=failed_response)
 
-        records = scrape_all_pages(
-            page_count=1,
-            output_path=self.output_path,
-            request_get=request_get,
-            sleep=self.no_sleep,
-            page_delay=0,
-            retry_delay=0,
-            max_retries=2,
-            logger=self.logger,
-        )
+        with self.assertRaisesRegex(RuntimeError, "Scrape incomplete"):
+            scrape_all_pages(
+                page_count=1,
+                output_path=self.output_path,
+                request_get=request_get,
+                sleep=self.no_sleep,
+                page_delay=0,
+                retry_delay=0,
+                max_retries=2,
+                logger=self.logger,
+            )
 
-        self.assertEqual(records, [])
         self.assertEqual(request_get.call_count, 2)
-        self.assertEqual(json.loads(self.output_path.read_text(encoding="utf-8")), [])
+        self.assertFalse(self.output_path.exists())
 
     def test_invalid_retry_configuration_is_rejected(self):
         with self.assertRaisesRegex(ValueError, "page_count"):
