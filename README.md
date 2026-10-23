@@ -2,8 +2,6 @@
 
 [![Scraper tests](https://github.com/Hariharans1971/migration_tool/actions/workflows/tests.yml/badge.svg)](https://github.com/Hariharans1971/migration_tool/actions/workflows/tests.yml)
 
-[![Scraper tests](https://github.com/Hariharans1971/migration_tool/actions/workflows/tests.yml/badge.svg)](https://github.com/Hariharans1971/migration_tool/actions/workflows/tests.yml)
-
 A Python learning project that scrapes the public Books to Scrape demo site, structures book listing data, exports JSON, and creates a summary report. It also contains small Flask and FastAPI endpoint examples.
 
 > Use this project only with sites you are authorized to access. Respect each site's terms, robots rules, rate limits, and applicable law. This demo is not a general-purpose production migration platform.
