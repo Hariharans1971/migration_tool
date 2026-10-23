@@ -1,5 +1,7 @@
 # Migration Tool — Web Data Extraction and Reporting
 
+[![Scraper tests](https://github.com/Hariharans1971/migration_tool/actions/workflows/tests.yml/badge.svg)](https://github.com/Hariharans1971/migration_tool/actions/workflows/tests.yml)
+
 A Python learning project that scrapes the public Books to Scrape demo site, structures book listing data, exports JSON, and creates a summary report. It also contains small Flask and FastAPI endpoint examples.
 
 > Use this project only with sites you are authorized to access. Respect each site's terms, robots rules, rate limits, and applicable law. This demo is not a general-purpose production migration platform.
@@ -66,15 +68,15 @@ The tests use saved HTML and mocked HTTP responses to verify extraction, HTTP-er
 - The scraper targets a practice site and its current HTML structure; page changes can break parsing.
 - Do not assume the reported number of records without running and checking the output.
 - The scraper validates HTTP status and required page elements, but the overall demo is not a production migration framework.
-- The separate NLP report requires the configured spaCy model; report generation should be checked independently.
+- Keyword extraction uses the spaCy English model when installed and falls back to deterministic token counting when it is unavailable.
+- If any requested page fails validation or exhausts retries, the scraper raises an error and does not write a partial export that could be mislabeled successful.
 - Avoid committing generated logs, large output dumps, secrets, or personal data.
 
 ## Roadmap
 
-- Add tests with saved HTML fixtures and no live network dependency.
-- Add configurable timeout, retry, and rate-limit settings.
-- Normalize schema and validate exported records.
-- Add reproducible sample outputs and structured error reporting.
+- Add structured run summaries for successful page count, record count, and failure causes.
+- Add schema versioning to exported JSON and reporting output.
+- Consider a separately labelled partial-export mode only if users need it.
 
 ## Author
 
