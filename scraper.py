@@ -80,6 +80,7 @@ def scrape_all_pages(
     active_logger = logger or setup_logger()
     headers = {"User-Agent": USER_AGENT}
     books_data: list[dict[str, str]] = []
+    failed_pages: list[int] = []
 
     for page_number in range(1, page_count + 1):
         url = BASE_URL.format(page=page_number)
@@ -122,6 +123,15 @@ def scrape_all_pages(
             books_data.extend(page_records)
             if page_number < page_count and page_delay:
                 sleep(page_delay)
+        else:
+            failed_pages.append(page_number)
+
+    if failed_pages:
+        # Never publish a partial scrape as a successful export/report.
+        raise RuntimeError(
+            f"Scrape incomplete: failed to validate or fetch page(s) {failed_pages}. "
+            "No JSON export was written; correct the source or retry the run."
+        )
 
     save_to_json(books_data, filename=str(output_path))
     active_logger.info("Scrape finished with %s records across %s requested pages.", len(books_data), page_count)
